@@ -42,6 +42,8 @@ try:
             of.write(l)
 except TypeError, KeyError:
     file_content = data.value.__repr__()
+    file_content = a.strip("'")
+    file_content = a.strip('"')
     with open(data_file, "w") as of:
         of.write(file_content)
     with open(data_archive, "w") as of:
