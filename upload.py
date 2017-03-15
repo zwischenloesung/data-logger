@@ -42,10 +42,10 @@ try:
             of.write(l)
 except TypeError, KeyError:
     file_content = data.value.__repr__()
-    file_content = a.strip("'")
-    file_content = a.strip('"')
-    file_content = re.sub("\\\\r", "", a)
-    file_content = re.sub("\\\\n", "\n", a)
+    file_content = file_content.strip("'")
+    file_content = file_content.strip('"')
+    file_content = re.sub("\\\\r", "", file_content)
+    file_content = re.sub("\\\\n", "\n", file_content)
     with open(data_file, "w") as of:
         of.write(file_content)
     with open(data_archive, "w") as of:
