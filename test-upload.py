@@ -2,15 +2,21 @@
 
 # test-upload.py url
 
+from base64 import b64encode
+import getpass
+import httplib
+import requests
 import sys
 import urllib2
-import requests
-import httplib
 
 def upload(url):
     try:
-        headers = {"User-Agent": "Mozilla/5.0", "Content-Type": "'<xml><foo/></xml>'"}
-        request = requests.get(url, headers=headers, verify=false)
+        print "User: "
+        user = sys.stdin.readline().rstrip()
+        password = getpass.getpass()
+        credentials = b64encode(user + ":" + password).decode("ascii")
+        headers = {"User-Agent": "Mozilla/5.0", "Content-Type": "'<xml><foo/></xml>'", 'Authorization': 'Basic %s' %  credentials}
+        request = requests.get(url, headers=headers, verify=False)
     except httplib.IncompleteRead as e:
 
         request = e.partial
