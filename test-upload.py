@@ -21,7 +21,7 @@ def upload(url, do_verify=True):
             password = getpass.getpass()
             credentials = b64encode(user + ":" + password).decode("ascii")
         if password:
-            headers = {"Content-Type": "application/xml", 'Authorization': 'Basic %s' %  credentials}
+            headers = {"Content-Type": "application/xml", 'Authorization': 'Basic %s' % credentials}
         else:
             headers = {"Content-Type": "application/xml"}
         request = requests.post(url, headers=headers, data=payload, verify=do_verify)
