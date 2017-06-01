@@ -1,21 +1,23 @@
 #!/usr/bin/python
 
 import os
-import commands
 import cgi
 import datetime
 import re
-import sys
 
+# debug {{ #
 #import cgitb
 #cgitb.enable(display=0, logdir="/path/logfile")
+# debug }} #
 
+# config {{ #
 file_latest = "latest"
 connection_file_suffix="txt"
 connection_file_path = "/srv/www/data/connection"
 data_file_suffix = "xml"
 data_file_path = "/srv/www/data/sensor-data"
 file_upload_key = "file"
+# config }} #
 
 print "Content-Type: text/plain;charset=utf-8"
 print ""
