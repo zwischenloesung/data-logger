@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# Testing script for different POST upload requests
+
 import os
 import cgi
 import datetime
@@ -49,7 +51,7 @@ def store(storage_path):
 
 if __name__ == "__main__":
 
-    storage_path = "/srv/www/data/"
+    storage_path = "/tmp/"
 
     print "Content-Type: text/plain;charset=utf-8"
     print ""
