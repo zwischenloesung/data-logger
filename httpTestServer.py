@@ -7,19 +7,23 @@
 
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 import cgi
+import datetime
 import re
 import sys
+import urlparse
 
-class DataLogRequestHandler(BaseHTTPRequestHandler, object):
+class DataStoreRequestHandler(BaseHTTPRequestHandler, object):
     def __init__(self, *arg):
         self.out_path = "/tmp"
-        super(DataLogRequestHandler, self).__init__(*arg)
+        self.in_path = "."
+        super(DataStoreRequestHandler, self).__init__(*arg)
 
     def do_GET(self):
+
         self.send_response(200)
         return
 
-def httpd(socketaddress, handler=DataLogRequestHandler):
+def httpd(socketaddress, handler=DataStoreRequestHandler):
     try:
         s = HTTPServer(socketaddress, handler)
         print "Server started"
