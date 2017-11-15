@@ -10,13 +10,17 @@ import cgi
 import re
 import sys
 
-def httpd(socketaddress, handler=BaseHTTPServer.BaseHTTPRequestHandler):
+class DataLogRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+
+def httpd(socketaddress, handler=DataLogRequestHandler):
     try:
         s = BaseHTTPServer.HTTPServer(socketaddress, handler)
         print "Server started"
         s.serve_forever()
     except KeyboardInterrupt:
-        server.socket.close()
+        s.socket.close()
 
 def setup():
     try:
