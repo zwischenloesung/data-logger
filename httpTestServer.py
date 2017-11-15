@@ -48,10 +48,10 @@ class DataStoreRequestHandler(BaseHTTPRequestHandler, object):
                     of.write(file_content)
             self.send_response(200)
             self.end_headers()
-            self.wfile.write()
         except:
-            print "Error"
-
+            print "Error: no data received..."
+            self.send_response(500)
+            self.end_headers()
 
 def httpd(socketaddress, handler=DataStoreRequestHandler):
     try:
