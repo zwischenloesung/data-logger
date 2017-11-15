@@ -10,6 +10,7 @@ import cgi
 import datetime
 import re
 import sys
+import upload_dispatcher
 import urlparse
 
 class DataStoreRequestHandler(BaseHTTPRequestHandler, object):
@@ -35,23 +36,9 @@ class DataStoreRequestHandler(BaseHTTPRequestHandler, object):
         ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
         data = cgi.FieldStorage()
         try:
-
-            if ctype == 'multipart/form-data':
-                self.send_header("Content-type", "text/plain")
-                print data.value.__repr__()
-            elif ctype == 'application/xml':
-                file_content = data.value.__repr__()
-                print file_content
-                file_content = file_content.strip("'")
-                file_content = file_content.strip('"')
-                file_content = re.sub("\\\\r", "", file_content)
-                file_content = re.sub("\\\\n", "\n", file_content)
-                with open(outfile, "w") as of:
-                    of.write(file_content)
-            self.send_response(200)
-            self.end_headers()
+            upload_dispatcher.store(self.out_path, data)
         except:
-            print "Error: no data received..."
+            print("Error: Server Error...")
             self.send_response(500)
             self.end_headers()
 
