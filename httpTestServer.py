@@ -20,6 +20,8 @@ class DataStoreRequestHandler(BaseHTTPRequestHandler, object):
 
     def do_GET(self):
 #        timestamp = datetime.datetime.utcnow().replace(microsecond=0).isoformat()
+        if len(self.path) <= 1:
+            self.path = "/index.html"
         html_path = "./" + self.path
         with open(html_path, "r") as of:
             html = of.read()
@@ -32,8 +34,8 @@ class DataStoreRequestHandler(BaseHTTPRequestHandler, object):
     def do_POST(self):
         ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
         data = cgi.FieldStorage()
-        postvars = {}
         try:
+
             if ctype == 'multipart/form-data':
                 self.send_header("Content-type", "text/plain")
                 print data.value.__repr__()
