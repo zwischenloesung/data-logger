@@ -29,6 +29,30 @@ class DataStoreRequestHandler(BaseHTTPRequestHandler, object):
         self.wfile.write(html)
         return
 
+    def do_POST(self):
+        ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
+        data = cgi.FieldStorage()
+        postvars = {}
+        try:
+            if ctype == 'multipart/form-data':
+                self.send_header("Content-type", "text/plain")
+                print data.value.__repr__()
+            elif ctype == 'application/xml':
+                file_content = data.value.__repr__()
+                print file_content
+                file_content = file_content.strip("'")
+                file_content = file_content.strip('"')
+                file_content = re.sub("\\\\r", "", file_content)
+                file_content = re.sub("\\\\n", "\n", file_content)
+                with open(outfile, "w") as of:
+                    of.write(file_content)
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write()
+        except:
+            print "Error"
+
+
 def httpd(socketaddress, handler=DataStoreRequestHandler):
     try:
         s = HTTPServer(socketaddress, handler)
