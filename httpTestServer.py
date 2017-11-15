@@ -19,8 +19,14 @@ class DataStoreRequestHandler(BaseHTTPRequestHandler, object):
         super(DataStoreRequestHandler, self).__init__(*arg)
 
     def do_GET(self):
+#        timestamp = datetime.datetime.utcnow().replace(microsecond=0).isoformat()
+        html_path = "./" + self.path
+        with open(html_path, "r") as of:
+            html = of.read()
 
         self.send_response(200)
+        self.end_headers()
+        self.wfile.write(html)
         return
 
 def httpd(socketaddress, handler=DataStoreRequestHandler):
