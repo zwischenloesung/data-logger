@@ -5,18 +5,23 @@
 # Just used for testing..
 #########################################################################
 
-import BaseHTTPServer
+from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 import cgi
 import re
 import sys
 
-class DataLogRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class DataLogRequestHandler(BaseHTTPRequestHandler, object):
+    def __init__(self, *arg):
+        self.out_path = "/tmp"
+        super(DataLogRequestHandler, self).__init__(*arg)
+
     def do_GET(self):
         self.send_response(200)
+        return
 
 def httpd(socketaddress, handler=DataLogRequestHandler):
     try:
-        s = BaseHTTPServer.HTTPServer(socketaddress, handler)
+        s = HTTPServer(socketaddress, handler)
         print "Server started"
         s.serve_forever()
     except KeyboardInterrupt:
